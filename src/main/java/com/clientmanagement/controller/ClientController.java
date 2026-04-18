@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Set;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "https://client-management-service-app-ui-production.up.railway.app"
+})
 @RequestMapping("/api/clients")
 public class ClientController {
 
