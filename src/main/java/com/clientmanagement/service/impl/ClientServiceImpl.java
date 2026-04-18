@@ -1,6 +1,8 @@
 package com.clientmanagement.service.impl;
 
+import com.clientmanagement.dto.request.ClientFilterParams;
 import com.clientmanagement.dto.request.ClientRequestDto;
+import com.clientmanagement.dto.request.ClientSearchRequest;
 import com.clientmanagement.dto.response.ClientResponseDto;
 import com.clientmanagement.entity.Client;
 import com.clientmanagement.exception.DuplicateResourceException;
@@ -8,6 +10,7 @@ import com.clientmanagement.exception.ResourceNotFoundException;
 import com.clientmanagement.mapper.ClientMapper;
 import com.clientmanagement.repository.ClientRepository;
 import com.clientmanagement.service.ClientService;
+import com.clientmanagement.specification.ClientSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,14 @@ public class ClientServiceImpl implements ClientService {
                              ClientMapper clientMapper) {
         this.clientRepository = clientRepository;
         this.clientMapper = clientMapper;
+    }
+
+
+    @Override
+    public Page<ClientResponseDto> searchClients(ClientFilterParams filters, Pageable pageable) {
+        return clientRepository
+                .findAll(ClientSpecification.filterClients(filters), pageable)
+                .map(clientMapper::toResponseDto);
     }
 
     @Override
@@ -67,7 +78,7 @@ public class ClientServiceImpl implements ClientService {
         return clientMapper.toResponseDto(client);
     }
 
-    @Override
+
     public Page<ClientResponseDto> getAllClients(Pageable pageable) {
 
         Page<Client> clientsPage = clientRepository.findAll(pageable);
