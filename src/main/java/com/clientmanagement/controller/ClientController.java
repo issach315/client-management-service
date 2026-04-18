@@ -16,7 +16,8 @@ import java.util.Set;
 @RestController
 @CrossOrigin(origins = {
         "http://localhost:5173",
-        "https://client-management-service-app-ui-production.up.railway.app"
+        "https://client-management-service-app-ui-production.up.railway.app",
+        "https://client-management-service-app-ui.vercel.app/clients"
 })
 @RequestMapping("/api/clients")
 public class ClientController {
