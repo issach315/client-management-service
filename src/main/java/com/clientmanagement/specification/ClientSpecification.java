@@ -15,6 +15,21 @@ public class ClientSpecification {
 
             List<Predicate> predicates = new ArrayList<>();
 
+            // ── Global search across multiple fields ─────────────────────────
+            if (hasValue(f.getSearch())) {
+                String pattern = "%" + f.getSearch().toLowerCase().trim() + "%";
+
+                Predicate globalSearch = cb.or(
+                        cb.like(cb.lower(root.get("clientName")), pattern),
+                        cb.like(cb.lower(root.get("email")),      pattern),
+                        cb.like(cb.lower(root.get("industry")),   pattern),
+                        cb.like(cb.lower(root.get("location")),   pattern),
+                        cb.like(cb.lower(root.get("status")),     pattern)
+                );
+                predicates.add(globalSearch);
+            }
+
+            // ── Field-specific filters (AND'd together) ──────────────────────
             if (hasValue(f.getClientName())) {
                 predicates.add(cb.like(
                         cb.lower(root.get("clientName")),

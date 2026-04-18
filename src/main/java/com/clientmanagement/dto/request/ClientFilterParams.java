@@ -2,6 +2,7 @@ package com.clientmanagement.dto.request;
 
 public class ClientFilterParams {
 
+    private String search;
     private String clientName;
     private String email;
     private String phoneNumber;
@@ -59,5 +60,13 @@ public class ClientFilterParams {
 
     public void setLocation(String v) {
         this.location = v;
+    }
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
     }
 }
